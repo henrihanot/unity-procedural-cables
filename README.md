@@ -1,2 +1,2 @@
-# unity-procedural-cables
+# Unity procedural cables
 Components for make procedural cables and curved shapes
