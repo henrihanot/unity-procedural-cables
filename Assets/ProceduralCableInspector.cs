@@ -8,6 +8,7 @@ public class ProceduralCableInspector : Editor {
 
     ProceduralCable proceduralCable;
 
+
     public void OnEnable()
     {
         proceduralCable = (ProceduralCable)target;
@@ -15,6 +16,8 @@ public class ProceduralCableInspector : Editor {
 
     public override void OnInspectorGUI()
     {
+        proceduralCable.drawEditorLines = EditorGUILayout.Toggle("Draw lines ", proceduralCable.drawEditorLines);
+
         EditorGUI.BeginChangeCheck();
         float newCurvature = EditorGUILayout.FloatField("Curvature", proceduralCable.curvature);
         int newStep = EditorGUILayout.IntField("Step",proceduralCable.step);
@@ -56,14 +59,19 @@ public class ProceduralCableInspector : Editor {
             proceduralCable.UpdateObject();
             EditorUtility.SetDirty(proceduralCable);
         }
-        /*
-        for (int i = 0; i < step; i++)
+
+        if (proceduralCable.drawEditorLines)
         {
-            Handles.DrawLine(proceduralCable.PointPosition(i), proceduralCable.PointPosition(i + 1));
-            DrawVerticesForPoint(i);
+            for (int i = 0; i < step; i++)
+            {
+                Handles.DrawLine(proceduralCable.PointPosition(i), proceduralCable.PointPosition(i + 1));
+                DrawVerticesForPoint(i);
+            }
+            Handles.DrawPolyLine(proceduralCable.VerticesForPoint(step));
+            DrawVerticesForPoint(step);
         }
-        Handles.DrawPolyLine(proceduralCable.VerticesForPoint(step).ToArray());
-        DrawVerticesForPoint(step);*/
+
+
 
     }
 

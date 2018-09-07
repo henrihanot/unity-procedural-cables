@@ -10,6 +10,7 @@ public class ProceduralCable : MonoBehaviour {
     public float curvature = 1;
     public float radius = 0.2f;
     public int radiusStep = 6;
+    public bool drawEditorLines = false;
 
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
