@@ -8,7 +8,6 @@ public class ProceduralCableInspector : Editor {
 
     ProceduralCable proceduralCable;
 
-
     public void OnEnable()
     {
         proceduralCable = (ProceduralCable)target;
@@ -49,8 +48,10 @@ public class ProceduralCableInspector : Editor {
         int step = proceduralCable.step;
 
         EditorGUI.BeginChangeCheck();
+
         Vector3 newAposition = Handles.DoPositionHandle(proceduralCable.a, Quaternion.identity);
         Vector3 newBposition = Handles.DoPositionHandle(proceduralCable.b, Quaternion.identity);
+
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(proceduralCable, "Change position of extremity point");

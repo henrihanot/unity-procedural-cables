@@ -17,9 +17,7 @@ public class ProceduralCable : MonoBehaviour {
 
     void OnEnable() {
 
-        Debug.Log("Start");
         meshFilter = GetComponent<MeshFilter>() == null ? gameObject.AddComponent<MeshFilter>() : GetComponent<MeshFilter>();
-        meshRenderer = GetComponent<MeshRenderer>() == null ? gameObject.AddComponent<MeshRenderer>() : GetComponent<MeshRenderer>();
         UpdateObject();
 
     }
