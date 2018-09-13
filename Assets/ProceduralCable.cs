@@ -10,6 +10,8 @@ public class ProceduralCable : MonoBehaviour {
     public float curvature = 1;
     public float radius = 0.2f;
     public int radiusStep = 6;
+    public Vector2 uvMultiply = Vector2.one;
+
     public bool drawEditorLines = false;
 
     MeshFilter meshFilter;
@@ -54,7 +56,7 @@ public class ProceduralCable : MonoBehaviour {
         Quaternion rotation = Quaternion.LookRotation(orientation, Vector3.Cross(Vector3.down, b - a)); 
 
         List<Vector3> vertices = new List<Vector3>();
-        float angleStep = 360f / radiusStep;
+        float angleStep = 360f / (radiusStep-1);
 
         for(int h = 0; h < radiusStep; h++)
         {
@@ -77,6 +79,8 @@ public class ProceduralCable : MonoBehaviour {
 
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
+        List<Vector2> uvs = new List<Vector2>();
+        List<Vector3> normals = new List<Vector3>();
 
         for (int i = 0; i <= step; i++)
         {
@@ -84,6 +88,13 @@ public class ProceduralCable : MonoBehaviour {
             for (int h = 0; h < verticesForPoint.Length; h++)
             {
                 vertices.Add(verticesForPoint[h]);
+                normals.Add((verticesForPoint[h] - PointPosition(i)).normalized);
+
+
+
+                uvs.Add(new Vector2(i * uvMultiply.x,(float)h / (verticesForPoint.Length-1) * uvMultiply.y));
+
+
 
                 if (i < step)
                 {
@@ -103,11 +114,17 @@ public class ProceduralCable : MonoBehaviour {
 
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
+        mesh.normals = normals.ToArray();
+        mesh.uv = uvs.ToArray();
         mesh.RecalculateBounds();
-        mesh.RecalculateNormals();
+        
         mesh.RecalculateTangents();
         
         return mesh;
     }
 
+    public float SegmentLenght(int a,int b)
+    {
+        return (PointPosition(b) - PointPosition(a)).magnitude;
+    }
 }

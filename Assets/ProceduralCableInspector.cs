@@ -11,6 +11,7 @@ public class ProceduralCableInspector : Editor {
     public void OnEnable()
     {
         proceduralCable = (ProceduralCable)target;
+        Undo.undoRedoPerformed += () => { proceduralCable.UpdateObject(); };
     }
 
     public override void OnInspectorGUI()
@@ -22,6 +23,7 @@ public class ProceduralCableInspector : Editor {
         int newStep = EditorGUILayout.IntField("Step",proceduralCable.step);
         int newRadiusStep = EditorGUILayout.IntField("Radius step", proceduralCable.radiusStep);
         float newRadius = EditorGUILayout.FloatField("Radius", proceduralCable.radius);
+        Vector2 newUvMultiply = EditorGUILayout.Vector2Field("UV Multiply", proceduralCable.uvMultiply);
         if (EditorGUI.EndChangeCheck())
         {
             Undo.RecordObject(proceduralCable, "Change parameter");
@@ -36,6 +38,8 @@ public class ProceduralCableInspector : Editor {
 
             newRadius = newRadius < 0 ? 0 : newRadius;
             proceduralCable.radius = newRadius;
+
+            proceduralCable.uvMultiply = newUvMultiply;
 
             proceduralCable.UpdateObject();
 
