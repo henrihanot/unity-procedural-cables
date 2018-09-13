@@ -81,6 +81,7 @@ public class ProceduralCable : MonoBehaviour {
         List<int> triangles = new List<int>();
         List<Vector2> uvs = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
+        float lenght = 0;
 
         for (int i = 0; i <= step; i++)
         {
@@ -90,11 +91,7 @@ public class ProceduralCable : MonoBehaviour {
                 vertices.Add(verticesForPoint[h]);
                 normals.Add((verticesForPoint[h] - PointPosition(i)).normalized);
 
-
-
-                uvs.Add(new Vector2(i * uvMultiply.x,(float)h / (verticesForPoint.Length-1) * uvMultiply.y));
-
-
+                uvs.Add(new Vector2(lenght * uvMultiply.x,(float)h / (verticesForPoint.Length-1) * uvMultiply.y));
 
                 if (i < step)
                 {
@@ -110,6 +107,7 @@ public class ProceduralCable : MonoBehaviour {
 
                 }
             }
+            lenght += SegmentLenght(i, i + 1);
         }
 
         mesh.vertices = vertices.ToArray();
